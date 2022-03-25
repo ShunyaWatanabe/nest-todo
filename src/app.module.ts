@@ -1,3 +1,5 @@
+import { UsersModule } from './user/users.module';
+import { User } from 'src/user/user.model';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -19,10 +21,11 @@ import { join } from 'path';
       username: 'root',
       password: 'password',
       database: 'test',
-      entities: [Todo],
+      entities: [Todo, User],
       synchronize: true,
     }),
     TodosModule,
+    UsersModule,
   ],
 })
 export class AppModule {}

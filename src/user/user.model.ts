@@ -5,26 +5,25 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToOne,
-  JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/user/user.model';
+import { Todo } from 'src/todo/todo.model';
 
 @Entity()
 @ObjectType()
-export class Todo extends BaseEntity {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field((type) => Int)
   id: number;
 
   @Column()
   @Field()
-  title: string;
+  name: string;
 
-  @Column({ nullable: true })
-  @Field({ nullable: true })
-  description?: string;
+  @Column({ unique: true })
+  @Field()
+  email: string;
 
   @CreateDateColumn()
   @Field()
@@ -34,11 +33,6 @@ export class Todo extends BaseEntity {
   @Field()
   updatedAt: Date;
 
-  @Column()
-  @Field((type) => Int)
-  userId: number;
-
-  @ManyToOne((type) => User, (user) => user.todos)
-  @JoinColumn({ name: 'userId' })
-  user: User;
+  @OneToMany((type) => Todo, (todo) => todo.user)
+  todos: Todo[];
 }

@@ -11,11 +11,22 @@ export class TodosResolver {
     return this.todosService.findOne(id);
   }
 
+  @Query((returns) => [Todo])
+  async todos() {
+    return this.todosService.findAll();
+  }
+
+  @Query((returns) => [Todo])
+  async todosByUserId(@Args('userId') userId: number) {
+    return this.todosService.findByUserId(userId);
+  }
+
   @Mutation(() => Todo)
   async addTodo(
+    @Args('userId') userId: number,
     @Args('title') title: string,
     @Args('description') description: string,
   ) {
-    return this.todosService.create({ title, description });
+    return this.todosService.create({ title, description, userId });
   }
 }

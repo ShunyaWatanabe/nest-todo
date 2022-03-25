@@ -18,7 +18,17 @@ export class TodosService {
     return this.todosRepository.findOne(id);
   }
 
-  create(params: { title: string; description: string }): Promise<Todo> {
+  findByUserId(userId: number): Promise<Todo[]> {
+    return this.todosRepository.find({
+      where: { userId },
+    });
+  }
+
+  create(params: {
+    userId: number;
+    title: string;
+    description: string;
+  }): Promise<Todo> {
     return this.todosRepository.save(params);
   }
 
